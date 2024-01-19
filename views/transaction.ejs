@@ -1,0 +1,97 @@
+<%- include("partials/header.ejs") %>
+<div class="transaction_detail">
+  <div class="transaction_type">
+    <h1>Add Transaction</h1>
+    <form action="/direct" method="post">
+      <input
+        type="submit"
+        value="Income"
+        name="transc_type"
+        class="transaction_type__income"
+      />
+      <input
+        type="submit"
+        value="Expense"
+        name="transc_type"
+        class="transaction_type__expense"
+      />
+      <input
+        type="submit"
+        value="Category"
+        name="transc_type"
+        class="transaction_type__category"
+      />
+    </form>
+  </div>
+  <div class="transaction_form">
+    <% if(type){ %> <% if(type=== "Income"){ %>
+    <h4>Income</h4>
+    <% } else if(type=== "Expense"){ %>
+    <h4>Expense</h4>
+    <% } %> <% } %>
+    <form action="/add" method="post">
+      <input type="hidden" value="<%= type %>" name="transc_type" />
+      <% if(type === "Category") {%>
+      <div class="transc_input">
+        <label for=""><%= type %> Name</label>
+        <input type="text" name="name" required />
+      </div>
+      <% } else { %>
+      <div class="transc_input">
+        <label for=""><%= type %> Name</label>
+        <input type="text" name="name" required />
+      </div>
+      <div class="transc_input">
+        <label for=""><%= type %> Description (Optional)</label>
+        <input type="text" name="desc" />
+      </div>
+      <div class="transc_input">
+        <label for=""><%= type %> Amount</label>
+        <input type="number" min="10000" name="amount" step="1000" required />
+      </div>
+      <div class="transc_input">
+        <label for=""><%= type %> Date</label>
+        <input
+          type="date"
+          style="width: 220px; height: 32px"
+          min="2021-01-01"
+          name="date"
+          required
+        />
+      </div>
+      <div class="transc_input">
+        <label for=""><%= type %> Category</label>
+        <select
+          name="category"
+          style="
+            width: 220px;
+            height: 32px;
+            padding: 10px 0 10px;
+            border-radius: 10px;
+          "
+          required
+        >
+          <% category.forEach((item) => { %>
+          <option value="<%= item %>"><%= item%></option>
+          <% }) %>
+        </select>
+      </div>
+
+      <% }%>
+      <input
+        type="submit"
+        value="Add <%= type %>"
+        style="
+          width: 100%;
+          padding: 10px;
+          margin: 40px 0;
+          border: 1px solid <% if(type === 'Income'){%> rgb(0, 255, 4) <% } else if(type === 'Expense'){%> red <%} else{%> aqua <%}%>;
+          color: <% if(type === 'Income'){%> rgb(0, 255, 4) <% } else if(type === 'Expense'){%> rgb(255, 106, 106) <%}else{%> aqua <%}%>;
+          border-radius: 10px;
+          background-color: transparent;
+        "
+      />
+    </form>
+  </div>
+</div>
+<%- include("partials/footer.ejs") %>

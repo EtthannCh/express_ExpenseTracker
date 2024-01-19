@@ -1,0 +1,24 @@
+<%- include("partials/header.ejs") -%>
+<ul class="transc_list" id="history_list">
+  <a href="/">Back</a>
+  <% if(transaction) { transaction.forEach((item) => { %>
+  <div>
+    <li style="font-size: 30px"><%= item.name %></li>
+    <li
+      style="font-size: 24px;color: <% if(item.type === 'Expense'){%> red <%} else{%> rgb(0, 200, 0) <%} %>;"
+    >
+      <%= item.amount %>
+    </li>
+  </div>
+  <% if(item.desc){%>
+  <li><%= item.desc %></li>
+  <%} %>
+  <li style="font-size: 20px"><%= item.category %></li>
+  <li><%= item.date %></li>
+  <hr />
+  <% })} else { %>
+  <p>no transaction</p>
+  <% } %>
+</ul>
+
+<%- include("partials/footer.ejs") -%>

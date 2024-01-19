@@ -1,0 +1,89 @@
+<%- include("partials/header.ejs") %>
+<div class="container">
+  <h1>Expense Tracker By Etthanne Chandra</h1>
+
+  <div class="current_value">
+    <p>Total Balance :</p>
+    <h2><%= balance %></h2>
+    <p>Total</p>
+    <div class="income_expense">
+      <div class="transcation income">
+        <p>Income ▲</p>
+        <h2>+ <%= income %></h2>
+      </div>
+      <div class="transcation expense">
+        <p>Expense ▼</p>
+        <h2>- <%= expense %></h2>
+      </div>
+    </div>
+  </div>
+  <br />
+  <div
+    style="display: flex; justify-content: space-between; align-items: center"
+    class="month_div"
+  >
+    <h3>Month</h3>
+    <a href="/history" class="history_link">History</a>
+  </div>
+  <form class="month" action="/filter" method="post">
+    <input type="submit" value="All" name="monthIndex" />
+    <input type="submit" value="1" name="monthIndex" />
+    <input type="submit" value="2" name="monthIndex" />
+    <input type="submit" value="3" name="monthIndex" />
+    <input type="submit" value="4" name="monthIndex" />
+    <input type="submit" value="5" name="monthIndex" />
+    <input type="submit" value="6" name="monthIndex" />
+    <input type="submit" value="7" name="monthIndex" />
+    <input type="submit" value="8" name="monthIndex" />
+    <input type="submit" value="9" name="monthIndex" />
+    <input type="submit" value="10" name="monthIndex" />
+    <input type="submit" value="11" name="monthIndex" />
+    <input type="submit" value="12" name="monthIndex" />
+  </form>
+  <div class="transcation_history">
+    <div class="transcation_month">
+      <div
+        style="
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+          text-align: center;
+        "
+      >
+        <h4 style="position: sticky; top: 0"><%= monthString %></h4>
+        <% if(monthly){ %>
+        <p style="color: <% if(monthly) %>" ;><%= monthly %></p>
+        <% }else{ %>
+        <p>Rp 0</p>
+        <% } %>
+      </div>
+
+      <ul class="transc_list" id="transcList">
+        <% if(transaction) { transaction.forEach((item) => { %>
+        <div>
+          <li style="font-size: 20px"><%= item.name %></li>
+          <li
+            style="color: <% if(item.type === 'Expense'){%> red <%} else{%> rgb(0, 200, 0) <%} %>;"
+          >
+            Rp. <%= item.amount %>
+          </li>
+        </div>
+        <li><%= item.date %></li>
+        <% if(item.desc){%>
+        <li><%= item.desc %></li>
+        <%} %>
+        <li style="font-size: 14px"><%= item.category %></li>
+
+        <hr />
+        <% })} else { %>
+        <p>no transaction</p>
+        <% } %>
+      </ul>
+    </div>
+  </div>
+
+  <form action="/transaction" method="post">
+    <button type="submit" class="btn">+ Add</button>
+  </form>
+</div>
+<%- include("partials/footer.ejs") %>
